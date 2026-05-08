@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { View, Text, Animated, Image, TouchableOpacity } from 'react-native';
+import { View, Text, Animated, Image, TouchableOpacity, Pressable } from 'react-native';
 import { styles } from './styles';
 import { useNavigation } from '@react-navigation/native';
 
@@ -45,7 +45,14 @@ export const ScreenSaver = () => {
     };
 
     return (
-        <TouchableOpacity style={styles.container} onPress={handlePress} activeOpacity={1}>
+        <Pressable
+            focusable
+            onPress={handlePress}
+            style={(state: any) => [
+                styles.container,
+                { borderWidth: state.focused ? 4 : 0, borderColor: 'white' }
+            ]}
+        >
             <Animated.Image
                 source={{ uri: screenSaverImages[index] }}
                 style={[styles.image, { opacity: fadeAnim }]}
@@ -56,6 +63,6 @@ export const ScreenSaver = () => {
                 <Text style={styles.label}>{index + 1} / {screenSaverImages.length}</Text>
                 <Text style={styles.instruction}>Press OK to enter Dashboard</Text>
             </View>
-        </TouchableOpacity>
+        </Pressable>
     );
 };
